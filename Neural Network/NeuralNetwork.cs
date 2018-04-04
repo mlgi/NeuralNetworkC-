@@ -20,26 +20,18 @@ namespace Neural_Network
 
             // create input layer
             inputLayer = new Layer("Input", null, n_inputs);
+            Layer prev = inputLayer;
 
             // create hidden layers
             for (int i = 0; i < n_hiddenlayers; i++)
             {
-                if (i == 0)
-                {
-                    Layer temp = new Layer("Hidden", inputLayer, hidden_width);
-                    hiddenLayers.Add(temp);
-                }
-                else
-                {
-                    Layer temp = new Layer("Hidden", hiddenLayers[i - 1], hidden_width);
-                    hiddenLayers.Add(temp);
-                }
-
+                Layer temp = new Layer("Hidden", prev, hidden_width);
+                hiddenLayers.Add(temp);
+                prev = temp;
             }
 
             // create output layer
-            outputLayer = new Layer("Output", hiddenLayers[hiddenLayers.Count - 1], n_outputs);
-
+            outputLayer = new Layer("Output", prev, n_outputs);
         }
 
         // copy constructor
@@ -51,25 +43,18 @@ namespace Neural_Network
             // copy input layer
             // no need to copy weights since this is an input layer
             inputLayer = new Layer("Input", null, otherNetwork.inputLayer.Size);
+            Layer prev = inputLayer;
 
             // copy hidden layers
             for (int i = 0; i < otherNetwork.hiddenLayers.Count; i++)
             {
-                if (i == 0)
-                {
-                    Layer temp = new Layer(otherNetwork.hiddenLayers[i], inputLayer);
-                    hiddenLayers.Add(temp);
-                } 
-                else
-                {
-                    Layer temp = new Layer(otherNetwork.hiddenLayers[i], hiddenLayers[i - 1]);
-                    hiddenLayers.Add(temp);
-                }
+                Layer temp = new Layer(otherNetwork.hiddenLayers[i], prev);
+                hiddenLayers.Add(temp);
+                prev = temp;
             }
 
             // create output layer
-
-            outputLayer = new Layer(otherNetwork.outputLayer, otherNetwork.hiddenLayers[otherNetwork.hiddenLayers.Count - 1]);
+            outputLayer = new Layer(otherNetwork.outputLayer, prev);
         }
 
         // puts values into the input neurons
@@ -84,6 +69,7 @@ namespace Neural_Network
         // feed-forward!
         public void ForwardPropagate()
         {
+            // neurons in input layers dont need to be activated
             // activate neurons in hidden layers
             foreach (Layer layer in hiddenLayers)
             {
