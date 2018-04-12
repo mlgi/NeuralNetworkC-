@@ -1,5 +1,4 @@
 # NeuralNetworkC#
-## Intro
 This repository is for the purpose of storing my first neural network built from scratch.
 I created this initially to make a self-driving car in Unity. My first actual network was built in python, but I figured it to be too disorganized
 as I did not use any object-oriented programming styles. Since Unity supports C# and I'm more well-versed in C++ as compared to 
@@ -20,13 +19,18 @@ A NeuralNetwork is made up of Layers, which are in turn made up of Neurons
 
 ### Layers
 - creates a List<Neurons> of all the neurons contained in the Layer
-- copy constructer needs the Layer to be copied as well as the new preceding Layer
+- copy constructor needs the Layer to be copied as well as the new preceding Layer
 
 ### NeuralNetwork
 - uses the preceding two classes to create a network
 - constructor:
- - n_inputs(int) takes the number of input neurons in the input layer
- - n_hiddenlayers(int) takes the number of hidden layers
- - n_hidden_width(int) takes the number of neurons per hidden layer
- - n_outputs(int) takes the number of neurons in the output layer
+ - inputLayerWidth(int) takes the number of input neurons in the input layer
+ - hiddenLayersDepth(int) takes the number of hidden layers
+ - hiddenLayersWidth(int) takes the number of neurons per hidden layer
+ - outputLayerWidth(int) takes the number of neurons in the output layer
+ 
+## Training Example
+The included training example uses a dataset based off of the AND logic gate
+It just randomizes the weights of the network to see if it lowers the cost. If so, then the network is replaced with this new lower-cost network. Otherwise it keeps the old network unchanged.
+ 
 
