@@ -5,3 +5,10 @@ D:\Projects\Basic Neural Network C#\Neural Network\Neural Network\bin\Debug\Neur
 D:\Projects\Basic Neural Network C#\Neural Network\Neural Network\bin\Debug\Neural Network.pdb
 D:\Projects\Basic Neural Network C#\Neural Network\Neural Network\obj\Debug\Neural Network.exe
 D:\Projects\Basic Neural Network C#\Neural Network\Neural Network\obj\Debug\Neural Network.pdb
+D:\Projects\NeuralNetworkC#\Neural Network\bin\Debug\Neural Network.exe.config
+D:\Projects\NeuralNetworkC#\Neural Network\bin\Debug\Neural Network.exe
+D:\Projects\NeuralNetworkC#\Neural Network\bin\Debug\Neural Network.pdb
+D:\Projects\NeuralNetworkC#\Neural Network\obj\Debug\Neural Network.csprojResolveAssemblyReference.cache
+D:\Projects\NeuralNetworkC#\Neural Network\obj\Debug\Neural Network.csproj.CoreCompileInputs.cache
+D:\Projects\NeuralNetworkC#\Neural Network\obj\Debug\Neural Network.exe
+D:\Projects\NeuralNetworkC#\Neural Network\obj\Debug\Neural Network.pdb

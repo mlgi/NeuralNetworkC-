@@ -9,33 +9,35 @@ namespace Neural_Network
 {
     class Neuron
     {
-        public Layer previousLayer;
-        public List<double> weights = new List<double>();
-        private string neuronType;
-        public double bias;
-        public double value;
-        Random rand = new Random(Guid.NewGuid().GetHashCode()); //reuse this if you are generating many
+        public Layer PreviousLayer;
+        public List<double> Weights = new List<double>();
+        public readonly string NeuronType;
+        public double Bias;
+        public double Value;
+        Random rand = new Random(Guid.NewGuid().GetHashCode()); 
         
 
         // constructor
-        public Neuron(string ntype, Layer prev)
+        public Neuron(string neuronType, Layer previousLayer)
         {
-            neuronType = ntype;
+            NeuronType = neuronType;
 
-            // only initialize weights if this neuron isn't an input neuron
-            if (neuronType != "Input")
+            // only initialize Weights if this neuron isn't an input neuron
+            if (NeuronType != "Input")
             {
 
-                for (int i = 0; i < prev.Size; i++)
+                for (int i = 0; i < previousLayer.Width; i++)
                 {
-                    // initialize random weights
-                    weights.Add(rand.Next(-5,5));
+                    // initialize random Weights
+                    Weights.Add(rand.Next(-5,5));
 
-                    //Console.WriteLine(weights[i]);
                 }
-                // initialize random bias
-                bias = rand.Next(-5, 5);
-                //Console.WriteLine("");
+                // initialize random Bias
+                Bias = rand.Next(-5, 5);
+            } else
+            {
+                Weights = null;
+                Bias = 0;
             }
             
         }
@@ -43,42 +45,42 @@ namespace Neural_Network
         // copy constructor
         public Neuron(Neuron otherNeuron)
         {
-            neuronType = otherNeuron.GetNeuronType();
+            NeuronType = otherNeuron.GetNeuronType();
 
-            // copy weights
-            weights = new List<double>(otherNeuron.weights);
+            // copy Weights
+            Weights = new List<double>(otherNeuron.Weights);
 
-            // copy bias
-            bias = otherNeuron.bias;
+            // copy Bias
+            Bias = otherNeuron.Bias;
         }
 
         public double Squash(double x)
         {
-            // sigmoid
-            return (1 / (1 + Math.Exp(-x)));
+            // relu
+            return 0.5 * Math.Tanh(x) + 0.5;
         }
 
         public string GetNeuronType()
         {
-            return neuronType;
+            return NeuronType;
         }
 
         public void Activate()
         {
-            // add bias
-            double tempvalue = bias;
+            // add Bias
+            double tempvalue = Bias;
 
             int count = 0;
-            foreach(Neuron neuron in previousLayer.neurons)
+            foreach(Neuron neuron in PreviousLayer.Neurons)
             {
-                tempvalue += neuron.value * weights[count];
+                tempvalue += neuron.Value * Weights[count];
                 count++;
             }
             
-            // squash the value
-            value = Squash(tempvalue);
+            // squash the Value
+            Value = Squash(tempvalue);
 
-            //Console.WriteLine(tempvalue + " to " + value);
+            //Console.WriteLine(tempvalue + " to " + Value);
         }
     }
 }

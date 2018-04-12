@@ -8,47 +8,39 @@ namespace Neural_Network
 {
     class Layer
     {
-        private string layerType; // input, hidden, or output layer
-        public Layer previousLayer; 
-        public List<Neuron> neurons = new List<Neuron>();
-        public int Size;
+        public readonly string LayerType; // input, hidden, or output layer
+        public List<Neuron> Neurons = new List<Neuron>();
+        public readonly int Width;
 
         // constructor
-        public Layer(string type, Layer prev, int n_nodes)
+        public Layer(string layerType, Layer previousLayer, int layerWidth)
         {
-            layerType = type;
-            previousLayer = prev;
-            Size = n_nodes;
+            LayerType = layerType;
+            Width = layerWidth;
 
-            for (int i = 0; i < n_nodes; i++)
+            for (int i = 0; i < layerWidth; i++)
             {
-                neurons.Add(new Neuron(type, prev));
-                if (type == "Input")
-                    neurons[i].previousLayer = null;
+                Neurons.Add(new Neuron(layerType, previousLayer));
+                if (layerType == "Input")
+                    Neurons[i].PreviousLayer = null;
                 else
-                    neurons[i].previousLayer = prev;
+                    Neurons[i].PreviousLayer = previousLayer;
             }
         }
 
         // copy constructor
         // when copying a layer, only the weights matter
         // we assign a new "previous layer" because the new layer could have a different previous layer
-        public Layer(Layer otherLayer, Layer prev)
+        public Layer(Layer otherLayer, Layer previousLayer)
         {
-            layerType = otherLayer.GetLayerType();
-            previousLayer = prev;
-            Size = otherLayer.Size;
+            LayerType = otherLayer.LayerType;
+            Width = otherLayer.Width;
 
-            for (int i = 0; i < Size; i++)
+            for (int i = 0; i < otherLayer.Width; i++)
             {
-                neurons.Add(new Neuron(otherLayer.neurons[i]));
-                neurons[i].previousLayer = prev;
+                Neurons.Add(new Neuron(otherLayer.Neurons[i]));
+                Neurons[i].PreviousLayer = previousLayer;
             }
-        }
-
-        public string GetLayerType()
-        {
-            return layerType;
         }
         
     }

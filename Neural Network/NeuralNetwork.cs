@@ -8,61 +8,56 @@ namespace Neural_Network
 {
     class NeuralNetwork
     {
-        public int hiddenLayerWidth;
-        public Layer inputLayer;
-        public List<Layer> hiddenLayers = new List<Layer>();
-        public Layer outputLayer;
+        public Layer InputLayer;
+        public List<Layer> HiddenLayers = new List<Layer>();
+        public Layer OutputLayer;
 
         // constructor
-        public NeuralNetwork(int n_inputs, int n_hiddenlayers, int hidden_width, int n_outputs)
+        public NeuralNetwork(int inputLayerWidth, int hiddenLayersDepth, int hiddenLayersWidth, int outputLayerWidth)
         {
-            hiddenLayerWidth = hidden_width;
-
             // create input layer
-            inputLayer = new Layer("Input", null, n_inputs);
-            Layer prev = inputLayer;
+            InputLayer = new Layer("Input", null, inputLayerWidth);
+            Layer previousLayer = InputLayer;
 
             // create hidden layers
-            for (int i = 0; i < n_hiddenlayers; i++)
+            for (int i = 0; i < hiddenLayersDepth; i++)
             {
-                Layer temp = new Layer("Hidden", prev, hidden_width);
-                hiddenLayers.Add(temp);
-                prev = temp;
+                Layer temp = new Layer("Hidden", previousLayer, hiddenLayersWidth);
+                HiddenLayers.Add(temp);
+                previousLayer = temp;
             }
 
             // create output layer
-            outputLayer = new Layer("Output", prev, n_outputs);
+            OutputLayer = new Layer("Output", previousLayer, outputLayerWidth);
         }
 
         // copy constructor
         // when copying a network, only the weights and biases matter
         public NeuralNetwork(NeuralNetwork otherNetwork)
         {
-            hiddenLayerWidth = otherNetwork.hiddenLayerWidth;
-
             // copy input layer
             // no need to copy weights since this is an input layer
-            inputLayer = new Layer("Input", null, otherNetwork.inputLayer.Size);
-            Layer prev = inputLayer;
+            InputLayer = new Layer("Input", null, otherNetwork.InputLayer.Width);
+            Layer previousLayer = InputLayer;
 
             // copy hidden layers
-            for (int i = 0; i < otherNetwork.hiddenLayers.Count; i++)
+            for (int i = 0; i < otherNetwork.HiddenLayers.Count; i++)
             {
-                Layer temp = new Layer(otherNetwork.hiddenLayers[i], prev);
-                hiddenLayers.Add(temp);
-                prev = temp;
+                Layer temp = new Layer(otherNetwork.HiddenLayers[i], previousLayer);
+                HiddenLayers.Add(temp);
+                previousLayer = temp;
             }
 
             // create output layer
-            outputLayer = new Layer(otherNetwork.outputLayer, prev);
+            OutputLayer = new Layer(otherNetwork.OutputLayer, previousLayer);
         }
 
         // puts values into the input neurons
         public void SetInputs(List<double> inputs)
         {
-            for (int i = 0; i < inputLayer.Size; i++)
+            for (int i = 0; i < InputLayer.Width; i++)
             {
-                inputLayer.neurons[i].value = inputs[i];
+                InputLayer.Neurons[i].Value = inputs[i];
             }
         }
 
@@ -71,16 +66,16 @@ namespace Neural_Network
         {
             // neurons in input layers dont need to be activated
             // activate neurons in hidden layers
-            foreach (Layer layer in hiddenLayers)
+            foreach (Layer layer in HiddenLayers)
             {
-                foreach (Neuron neuron in layer.neurons)
+                foreach (Neuron neuron in layer.Neurons)
                 {
                     neuron.Activate();
                 }
             }
 
             // activate output neurons
-            foreach (Neuron neuron in outputLayer.neurons)
+            foreach (Neuron neuron in OutputLayer.Neurons)
             {
                 neuron.Activate();
             }
@@ -91,9 +86,9 @@ namespace Neural_Network
         {
             List<double> outputs = new List<double>();
 
-            foreach (Neuron neuron in outputLayer.neurons)
+            foreach (Neuron neuron in OutputLayer.Neurons)
             {
-                outputs.Add(neuron.value);
+                outputs.Add(neuron.Value);
             }
             return outputs;
         }
