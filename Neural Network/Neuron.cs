@@ -57,7 +57,8 @@ namespace Neural_Network
         public double Squash(double x)
         {
             // relu
-            return 0.5 * Math.Tanh(x) + 0.5;
+            if (x > 0) return x;
+            else return 0.01 * x;
         }
 
         public string GetNeuronType()
