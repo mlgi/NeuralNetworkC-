@@ -108,6 +108,9 @@ namespace Neural_Network
                 {
                     Console.WriteLine("updated");
                     _network = _testNetwork;
+                } else
+                {
+                    Console.WriteLine("not updated");
                 }
             }
 

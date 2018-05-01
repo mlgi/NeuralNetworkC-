@@ -57,7 +57,8 @@ namespace Neural_Network
         public double Squash(double x)
         {
             // relu
-            if (x > 0) return x;
+            if (x > 0)
+                return x;
             else return 0.01 * x;
         }
 
